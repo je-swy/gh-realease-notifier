@@ -50,7 +50,7 @@ async function scan() {
 function start() {
   // run every 10 minutes
   cron.schedule('*/10 * * * *', scan)
-  console.log('Scanner запущено')
+  console.log('Release scanner started, checking every 10 minutes...')
 }
 
 module.exports = { start, scan }

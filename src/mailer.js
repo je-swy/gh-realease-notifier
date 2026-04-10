@@ -4,12 +4,16 @@ require('dotenv').config()
 // main logic for sending emails about new releases and confirmations
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
-  port: process.env.SMTP_PORT,
-  secure: true,
+  port: parseInt(process.env.SMTP_PORT || '465'), 
+  secure: process.env.SMTP_PORT == '465', 
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
   },
+  // add TLS options to allow self-signed certificates if needed (e.g. for testing with MailHog)
+  tls: {
+    rejectUnauthorized: false
+  }
 })
 
 // Send confirmation email to user after they subscribe to a repo
