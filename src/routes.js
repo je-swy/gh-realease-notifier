@@ -46,16 +46,19 @@ router.post('/subscribe', async (req, res) => {
       return res.status(409).json({ message: 'Subscription already confirmed' })
     }
 
+    res.status(200).json({ message: 'Success! Confirmation email is being sent.' })
     //  send confirmation email
-    await sendConfirmEmail(email, repo, rows[0].confirm_token)
-
-    return res.status(200).json({ message: 'Subscription created. Check your email.' })
+    sendConfirmEmail(email, repo, rows[0].confirm_token).catch(err => {
+      console.error('Email sending failed in background:', err.message)
+    })
   } catch (error) {
     if (error.message === 'RATE_LIMIT') {
       return res.status(429).json({ message: 'GitHub rate limit. Try again later.' })
     }
     console.error(error)
-    return res.status(500).json({ message: 'Internal server error' })
+    if (!res.headersSent) {
+        return res.status(500).json({ message: 'Internal server error' })
+    }
   }
 })
 
