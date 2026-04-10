@@ -1,41 +1,28 @@
-const nodemailer = require('nodemailer')
-require('dotenv').config()
+const { Resend } = require('resend');
+require('dotenv').config();
 
-// main logic for sending emails about new releases and confirmations
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: parseInt(process.env.SMTP_PORT || '465'), 
-  secure: process.env.SMTP_PORT == '465', 
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-  // add TLS options to allow self-signed certificates if needed (e.g. for testing with MailHog)
-  tls: {
-    rejectUnauthorized: false
-  }
-})
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Send confirmation email to user after they subscribe to a repo
 async function sendConfirmEmail(email, repo, confirmToken) {
-  const confirmUrl = `${process.env.BASE_URL}/api/confirm/${confirmToken}`
-  await transporter.sendMail({
-    from: process.env.SMTP_USER,
+  const confirmUrl = `${process.env.BASE_URL}/api/confirm/${confirmToken}`;
+  
+  await resend.emails.send({
+    from: 'onboarding@resend.dev',
     to: email,
     subject: `Accept subscription to ${repo}`,
     html: `
       <h2>Confirm subscription</h2>
       <p>You have subscribed to releases of the repository <b>${repo}</b></p>
       <a href="${confirmUrl}">Confirm subscription</a>
-    `,
-  })
+    `
+  });
 }
 
-// Send release notification email to user with unsubscribe link
 async function sendReleaseEmail(email, repo, tag, unsubscribeToken) {
-  const unsubscribeUrl = `${process.env.BASE_URL}/api/unsubscribe/${unsubscribeToken}`
-  await transporter.sendMail({
-    from: process.env.SMTP_USER,
+  const unsubscribeUrl = `${process.env.BASE_URL}/api/unsubscribe/${unsubscribeToken}`;
+  
+  await resend.emails.send({
+    from: 'onboarding@resend.dev',
     to: email,
     subject: `New release ${repo}: ${tag}`,
     html: `
@@ -44,8 +31,8 @@ async function sendReleaseEmail(email, repo, tag, unsubscribeToken) {
       <a href="https://github.com/${repo}/releases/tag/${tag}">View release</a>
       <br><br>
       <a href="${unsubscribeUrl}">Unsubscribe</a>
-    `,
-  })
+    `
+  });
 }
 
-module.exports = { sendConfirmEmail, sendReleaseEmail }
+module.exports = { sendConfirmEmail, sendReleaseEmail };
