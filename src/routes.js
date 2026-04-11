@@ -82,7 +82,7 @@ router.get('/confirm/:token', async (req, res) => {
     [token]
   )
 
-  return res.status(200).json({ message: 'Subscription confirmed!' })
+  res.redirect('/success.html');
 })
 
 // GET /api/unsubscribe/:token
