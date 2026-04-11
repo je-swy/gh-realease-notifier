@@ -108,6 +108,31 @@ router.get('/unsubscribe/:token', async (req, res) => {
   return res.status(200).json({ message: 'Unsubscribed successfully' })
 })
 
+// POST /api/unsubscribe
+router.post('/unsubscribe', async (req, res) => {
+  const { email, repo } = req.body
+
+  if (!email || !repo) {
+    return res.status(400).json({ message: 'Email and repo are required' })
+  }
+
+  const { rows } = await pool.query(
+    'SELECT * FROM subscriptions WHERE email = $1 AND repo = $2',
+    [email, repo]
+  )
+
+  if (rows.length === 0) {
+    return res.status(404).json({ message: 'Subscription not found' })
+  }
+
+  await pool.query(
+    'DELETE FROM subscriptions WHERE email = $1 AND repo = $2',
+    [email, repo]
+  )
+
+  return res.status(200).json({ message: 'Unsubscribed successfully' })
+})
+
 // GET /api/subscriptions?email=...
 // This endpoint allows users to view their current subscriptions by providing their email address
 // It returns a list of repos they are subscribed to along with confirmation status and last seen release tag
@@ -120,7 +145,7 @@ router.get('/subscriptions', async (req, res) => {
   }
 
   const { rows } = await pool.query(
-    'SELECT email, repo, confirmed, last_seen_tag FROM subscriptions WHERE email = $1',
+    'SELECT email, repo, confirmed, last_seen_tag, unsubscribe_token FROM subscriptions WHERE email = $1',
     [email]
   )
 

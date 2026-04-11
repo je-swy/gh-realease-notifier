@@ -10,9 +10,26 @@
     <div class="card">
         <h1>Subscription Confirmed</h1>
         <p>
-            You have successfully confirmed your subscription. You will now receive 
+            You have successfully confirmed your subscription. You will now receive
             notifications about new releases of the selected repository at your email.
         </p>
+        <a href="/" class="btn">Subscribe to another repository</a>
+
+        <hr class="divider">
+
+        <h2>Unsubscribe</h2>
+        <p>Enter your email and repository to unsubscribe</p>
+
+        <label>Email address</label>
+        <input type="email" id="unsub-email" placeholder="your@gmail.com" />
+
+        <label>Repository</label>
+        <input type="text" id="unsub-repo" placeholder="microsoft/vscode" />
+
+        <button class="btn-secondary" onclick="unsubscribe()">Unsubscribe</button>
+        <div class="message" id="message"></div>
     </div>
+
+    <script src="scripts/success.js"></script>
 </body>
 </html>

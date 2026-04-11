@@ -58,3 +58,112 @@ p {
 .btn:hover {
   background: #2ea043;
 }
+
+label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #c9d1d9;
+  text-align: left;
+}
+
+input {
+  width: 100%;
+  padding: 10px 14px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #e6edf3;
+  font-size: 14px;
+  margin-bottom: 12px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #58a6ff;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #30363d;
+  margin: 32px 0;
+}
+
+h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #e6edf3;
+}
+
+.sub-list {
+  margin: 12px 0;
+  text-align: left;
+}
+
+.sub-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.sub-item span {
+  color: #8b949e;
+}
+
+.unsub-btn {
+  background: none;
+  border: 1px solid #f85149;
+  color: #f85149;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.unsub-btn:hover {
+  background: #2a0f0f;
+}
+
+.btn-secondary {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: #21262d;
+  color: #e6edf3;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.btn-secondary:hover {
+  background: #30363d;
+}
+
+.message {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: none;
+}
+
+.message.success {
+  background: #0f2a1a;
+  border: 1px solid #238636;
+  color: #3fb950;
+}
+
+.message.error {
+  background: #2a0f0f;
+  border: 1px solid #f85149;
+  color: #f85149;
+}
