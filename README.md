@@ -27,7 +27,8 @@ A service for subscribing to email notifications about new releases of GitHub re
 |--------|----------|-------------|
 | POST | `/api/subscribe` | Subscribe to repository releases |
 | GET | `/api/confirm/:token` | Confirm subscription |
-| GET | `/api/unsubscribe/:token` | Unsubscribe |
+| GET | `/api/unsubscribe/:token` | Unsubscribe via email link |
+| POST | `/api/unsubscribe` | Unsubscribe via email + repo |
 | GET | `/api/subscriptions?email=` | List subscriptions by email |
 
 ## Project Structure
@@ -44,6 +45,7 @@ migrations/
 └── 001_init.sql  # Subscriptions table schema
 public/
 └── index.html    # Web form for subscribing
+└── success.html  # Success page + unsubscribe form
 tests/
 ├── github.test.js  # GitHub client unit tests
 └── routes.test.js  # Input validation unit tests
